@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card border-0 shadow rounded">
+        <div class="card-body">
+            <a href="{{ route('blog.create') }}" class="btn btn-md btn-primary mb-3">Add New Blog</a>
+            <table class="table table-bordered">
+                <thead class="text-center">
+                    <th scope="col">Image</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Action</th>
+                </thead>
+                <tbody>
+                    @forelse ($blogs as $blog)
+                        <tr>
+                            <td>
+                                <img src="{{ Storage::url('public/blogs/').$blog->image }}" class="rounded" width="150">
+                            </td>
+                            <td>{{ $blog->title }}</td>
+                            <td>{!! $blog->content !!}</td>
+                            <td class="text-center">
+                                <form onsubmit="return confirm('Apakah anda yakin?');" action="{{ route('blog.destroy', $blog->id) }}">
+                                    <a href="{{ route('blog.edit', $blog->id) }}" class="btn btn-sm btn-warning">Change</a>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <div class="alert alert-danger">
+                            Data Blog belum tersedia.
+                        </div>
+                    @endforelse
+                </tbody>
+            </table>
+            {{ $blogs->links() }}
+        </div>
+    </div> --}}
+</body>
+</html>
